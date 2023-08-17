@@ -121,7 +121,7 @@
 <?php
 $host = "localhost";
 $username = "root";
-$password = "*password*";
+$password = "password";
 $database = "job_execution_db";
 
 $conn = new mysqli($host, $username, $password, $database);
@@ -130,7 +130,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$csvFile = "/Users/spartacus/Desktop/Web Development/php/my_project/mastersheet.csv";
+$csvFile = "/Users/spartacus/JobExecutionApp/my_project/mastersheet.csv";
 
 if (($handle = fopen($csvFile, "r")) !== FALSE) {
     $header = fgetcsv($handle, 0, "\t"); // Read the header to skip it
@@ -138,19 +138,9 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 0, "\t")) !== FALSE) {
         if (count($data) >= 16) { // Make sure there are enough columns in the data
             $updateSchoolQuery = $data[13];
-            $classUpdateQuery = $data[14];
-            $userDataUpdateQuery = $data[15];
 
             if (!empty($updateSchoolQuery)) {
                 mysqli_query($conn, $updateSchoolQuery);
-            }
-
-            if (!empty($classUpdateQuery)) {
-                mysqli_query($conn, $classUpdateQuery);
-            }
-
-            if (!empty($userDataUpdateQuery)) {
-                mysqli_query($conn, $userDataUpdateQuery);
             }
 
             if (!$isRunning) {

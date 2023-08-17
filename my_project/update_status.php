@@ -1,19 +1,22 @@
 <?php
 $host = "localhost";
 $username = "root";
-$password = "*password*";
+$password = "password";
 $database = "job_execution_db";
 
+// Initialize the connection
 $conn = new mysqli($host, $username, $password, $database);
 
+// Check the connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Query to fetch completed and remaining jobs
 $query = "SELECT completed, remaining FROM jobs WHERE id = 1";
 
+// Perform the query and handle errors
 $result = $conn->query($query);
-
 if ($result) {
     $row = $result->fetch_assoc();
     $status = array(
@@ -25,7 +28,9 @@ if ($result) {
     echo json_encode(array('error' => 'Unable to fetch status'));
 }
 
+// Close the connection
 $conn->close();
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Disable error reporting and displaying errors
+error_reporting(0);
+ini_set('display_errors', 0);

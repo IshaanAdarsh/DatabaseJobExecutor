@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $username = "root";
-$password = "*password*";
+$password = "password";
 $database = "job_execution_db";
 
 $conn = new mysqli($host, $username, $password, $database);
@@ -10,35 +10,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$csvFile = "/Users/spartacus/Desktop/Web Development/php/my_project/mastersheet.csv"; // Update with your file path
+$csvFile = "/Users/spartacus/JobExecutionApp/my_project/mastersheet.csv"; // Update with your file path
 
 if (($handle = fopen($csvFile, "r")) !== FALSE) {
     $header = fgetcsv($handle, 0, "\t");
 
     while (($data = fgetcsv($handle, 0, "\t")) !== FALSE) {
         $updateSchoolQuery = $data[13];
-        $classUpdateQuery = $data[14];
-        $userDataUpdateQuery = $data[15];
 
         $success = true;
 
         if (mysqli_query($conn, $updateSchoolQuery)) {
-            // Increment completed jobs and decrement remaining jobs
-            mysqli_query($conn, "UPDATE jobs SET completed = completed + 1, remaining = remaining - 1 WHERE id = 1");
-        } else {
-            $success = false;
-            // Handle error
-        }
-
-        if (mysqli_query($conn, $classUpdateQuery)) {
-            // Increment completed jobs and decrement remaining jobs
-            mysqli_query($conn, "UPDATE jobs SET completed = completed + 1, remaining = remaining - 1 WHERE id = 1");
-        } else {
-            $success = false;
-            // Handle error
-        }
-
-        if (mysqli_query($conn, $userDataUpdateQuery)) {
             // Increment completed jobs and decrement remaining jobs
             mysqli_query($conn, "UPDATE jobs SET completed = completed + 1, remaining = remaining - 1 WHERE id = 1");
         } else {
