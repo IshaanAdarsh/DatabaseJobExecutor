@@ -55,8 +55,6 @@ JobExecutionApp is a PHP-based web application that automates job execution thro
 
 2. Create a MySQL database and import the provided SQL script located in `database.sql`.
 
-3. Modify the `config.php` file to match your database credentials.
-
 ## Usage
 
 1. Access the application by navigating to its root directory using a web browser.
