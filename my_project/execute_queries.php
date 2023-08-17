@@ -20,26 +20,34 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
         $classUpdateQuery = $data[14];
         $userDataUpdateQuery = $data[15];
 
+        $success = true;
+
         if (mysqli_query($conn, $updateSchoolQuery)) {
-            // Handle success
+            // Increment completed jobs and decrement remaining jobs
+            mysqli_query($conn, "UPDATE jobs SET completed = completed + 1, remaining = remaining - 1 WHERE id = 1");
         } else {
+            $success = false;
             // Handle error
         }
 
         if (mysqli_query($conn, $classUpdateQuery)) {
-            // Handle success
+            // Increment completed jobs and decrement remaining jobs
+            mysqli_query($conn, "UPDATE jobs SET completed = completed + 1, remaining = remaining - 1 WHERE id = 1");
         } else {
+            $success = false;
             // Handle error
         }
 
         if (mysqli_query($conn, $userDataUpdateQuery)) {
-            // Handle success
+            // Increment completed jobs and decrement remaining jobs
+            mysqli_query($conn, "UPDATE jobs SET completed = completed + 1, remaining = remaining - 1 WHERE id = 1");
         } else {
+            $success = false;
             // Handle error
         }
 
-        if (!$isRunning) {
-            break; // Stop execution if not running
+        if (!$isRunning || !$success) {
+            break; // Stop execution if not running or if an error occurred
         }
     }
     fclose($handle);
