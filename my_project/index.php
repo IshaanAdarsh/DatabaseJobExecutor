@@ -121,7 +121,7 @@
 <?php
 $host = "localhost";
 $username = "root";
-$password = "password";
+$password = "*password*";
 $database = "job_execution_db";
 
 $conn = new mysqli($host, $username, $password, $database);
