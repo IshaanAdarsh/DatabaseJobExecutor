@@ -16,17 +16,22 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
     $header = fgetcsv($handle, 0, "\t");
 
     while (($data = fgetcsv($handle, 0, "\t")) !== FALSE) {
-        $updateSchoolQuery = $data[13];
+        if (count($data) >= 14) { // Make sure there are at least 14 columns in the data
+            $updateSchoolQuery = $data[13];
 
-        $success = true;
+            $success = true;
 
-        if (mysqli_query($conn, $updateSchoolQuery)) {
-            mysqli_query($conn, "UPDATE jobs SET completed = completed + 1, remaining = remaining - 1 WHERE id = 1");
+            if (!empty($updateSchoolQuery)) {
+                if (!mysqli_query($conn, $updateSchoolQuery)) {
+                    $success = false;
+                }
+            }
+
+            if (!$isRunning || !$success) {
+                break;
+            }
         } else {
-            $success = false;
-        }
-
-        if (!$isRunning || !$success) {
+            echo "Data does not have enough columns.";
             break;
         }
     }

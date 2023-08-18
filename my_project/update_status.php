@@ -4,6 +4,8 @@ $username = "root";
 $password = "password";
 $database = "job_execution_db";
 
+$isRunning = false; // Initialize the variable
+
 // Initialize the connection
 $conn = new mysqli($host, $username, $password, $database);
 
