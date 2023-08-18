@@ -10,7 +10,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$csvFile = "/Users/spartacus/JobExecutionApp/my_project/mastersheet.csv"; // Update with your file path
+$csvFile = "/Users/spartacus/JobExecutionApp/my_project/mastersheet.csv";
 
 if (($handle = fopen($csvFile, "r")) !== FALSE) {
     $header = fgetcsv($handle, 0, "\t");
@@ -21,15 +21,13 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
         $success = true;
 
         if (mysqli_query($conn, $updateSchoolQuery)) {
-            // Increment completed jobs and decrement remaining jobs
             mysqli_query($conn, "UPDATE jobs SET completed = completed + 1, remaining = remaining - 1 WHERE id = 1");
         } else {
             $success = false;
-            // Handle error
         }
 
         if (!$isRunning || !$success) {
-            break; // Stop execution if not running or if an error occurred
+            break;
         }
     }
     fclose($handle);

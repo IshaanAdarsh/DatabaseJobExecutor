@@ -17,7 +17,7 @@ $query = "SELECT completed, remaining FROM jobs WHERE id = 1";
 
 // Perform the query and handle errors
 $result = $conn->query($query);
-if ($result) {
+if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $status = array(
         'completed' => $row['completed'],
